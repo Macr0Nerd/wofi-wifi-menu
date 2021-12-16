@@ -16,4 +16,4 @@ XOFF=0
 FIELDS=SSID,SECURITY,BARS
 
 #font
-FONT="DejaVu Sans Mono 8"
+FONT="mononoki Nerd Font 14"
