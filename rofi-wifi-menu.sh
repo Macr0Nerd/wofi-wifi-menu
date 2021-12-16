@@ -1,16 +1,5 @@
 #!/usr/bin/env bash
 
-# Starts a scan of available broadcasting SSIDs
-# nmcli dev wifi rescan
-
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-if [ -r "$DIR/config" ]; then
-	source "$DIR/config"
-else
-	echo "WARNING: config file not found! Using default values."
-fi
-
 # this prints a beautifully formatted list. bash was a mistake
 LIST=$(nmcli --fields SSID,SECURITY,BARS device wifi list | sed '/^--/d' | sed 1d | sed -E "s/WPA*.?\S/~~/g" | sed "s/~~ ~~/~~/g" | sed s/802\.1X//g | sed "s/--/~~/g" | sed 's/  *~/~/g' | sed 's/~  */~/g' | sed 's/_/ /g' | column -t -s '~')
 
