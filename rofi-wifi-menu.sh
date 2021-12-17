@@ -12,18 +12,20 @@ elif [[ "$CONSTATE" =~ "disabled" ]]; then
 fi
 
 # display menu; store user choice
-CHENTRY=$(echo -e "$TOGGLE\n$LIST" | uniq -u | rofi -dmenu -p " Network:" -config "./theme.rasi")
+CHENTRY=$(echo -e "$TOGGLE\n$LIST" | uniq -u | rofi -dmenu -selected-row 1 -config "./theme.rasi")
 # store selected SSID
 CHSSID=$(echo "$CHENTRY" | sed  's/\s\{2,\}/\|/g' | awk -F "|" '{print $1}')
 
-if [ "$CHENTRY" = "Enable WiFi 直" ]; then
+if [ "$CHENTRY" = "" ]; then
+    exit
+elif [ "$CHENTRY" = "Enable WiFi 直" ]; then
 	nmcli radio wifi on
 elif [ "$CHENTRY" = "Disable WiFi 睊" ]; then
 	nmcli radio wifi off
 else
     # get list of known connections
     KNOWNCON=$(nmcli connection show)
-
+	
 	# If the connection is already in use, then this will still be able to get the SSID
 	if [ "$CHSSID" = "*" ]; then
 		CHSSID=$(echo "$CHENTRY" | sed  's/\s\{2,\}/\|/g' | awk -F "|" '{print $3}')
@@ -38,5 +40,4 @@ else
 		fi
 		nmcli dev wifi con "$CHSSID" password "$WIFIPASS"
 	fi
-
 fi
