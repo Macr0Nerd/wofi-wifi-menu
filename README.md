@@ -19,5 +19,6 @@ Configuration is fairly self-explanatory through the .rasi file.
 * Make the interface even more spartan
 
 **This forks' limitations:**
+* Width needs to manually bumped up based on longest SSID. Sorry :(
 * No manual SSID entry
 * WEP networks not tested
