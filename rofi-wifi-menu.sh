@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 # this prints a beautifully formatted list. bash was a mistake
-LIST=$(nmcli --fields SSID,SECURITY,BARS device wifi list | sed '/^--/d' | sed 1d | sed -E "s/WPA*.?\S/~~/g" | sed "s/~~ ~~/~~/g" | sed s/802\.1X//g | sed "s/--/~~/g" | sed 's/  *~/~/g' | sed 's/~  */~/g' | sed 's/_/ /g' | column -t -s '~')
+nmcli -t d wifi rescan
+LIST=$(nmcli --fields SSID,SECURITY,BARS device wifi list | sed '/^--/d' | sed 1d | sed -E "s/WPA*.?\S/~~/g" | sed "s/~~ ~~/~~/g;s/802\.1X//g;s/--/~~/g;s/  *~/~/g;s/~  */~/g;s/_/ /g" | column -t -s '~')
 
 # get current connection status
 CONSTATE=$(nmcli -fields WIFI g)
@@ -38,6 +39,11 @@ else
 		if [[ "$CHENTRY" =~ "" ]]; then
 			WIFIPASS=$(echo " Press Enter if network is saved" | rofi -dmenu -p " WiFi Password: " -lines 1 )
 		fi
-		nmcli dev wifi con "$CHSSID" password "$WIFIPASS"
+		if nmcli dev wifi con "$CHSSID" password "$WIFIPASS"
+		then
+			notify-send 'Connection successful'
+		else
+			notify-send 'Connection failed'
+		fi
 	fi
 fi
