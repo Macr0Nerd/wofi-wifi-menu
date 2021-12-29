@@ -7,7 +7,7 @@ Ideal for setting as an on-click action for your status bar's WiFi module.
 
 ![Screenshot from 2021-12-16 16-40-02](https://user-images.githubusercontent.com/91982627/146453094-f07a3c2a-77ce-41e9-853e-d9809f0a1810.png)
 
-In addition to the original project's dependencies, this script uses:
+In addition to the original project's dependencies (bash, nmcli, rofi), this script uses:
 * [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts) to display icons
 * notify-send to display success/failure notification on connection
 
