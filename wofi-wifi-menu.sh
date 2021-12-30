@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+conf=~/.config/wofi-wifi-menu
+
 # this prints a beautifully formatted list. bash was a mistake
 LIST=$(nmcli --fields SSID,SECURITY,BARS device wifi list | sed '/^--/d' | sed 1d | sed -E "s/WPA*.?\S/~~/g" | sed "s/~~ ~~/~~/g" | sed s/802\.1X//g | sed "s/--/~~/g" | sed 's/  *~/~/g' | sed 's/~  */~/g' | sed 's/_/ /g' | column -t -s '~')
 
@@ -12,7 +14,7 @@ elif [[ "$CONSTATE" =~ "disabled" ]]; then
 fi
 
 # display menu; store user choice
-CHENTRY=$(echo -e "$TOGGLE\n$LIST" | uniq -u | wofi -d -c main_config -s style.css)
+CHENTRY=$(echo -e "$TOGGLE\n$LIST" | uniq -u | wofi -d -c $conf/main_config -s $conf/style.css)
 # store selected SSID
 CHSSID=$(echo "$CHENTRY" | sed  's/\s\{2,\}/\|/g' | awk -F "|" '{print $1}')
 
@@ -36,7 +38,7 @@ else
 		nmcli con up "$CHSSID"
 	else
 		if [[ "$CHENTRY" =~ "" ]]; then
-			WIFIPASS=$(echo " Press Enter if network is saved" | wofi -d -c pass_config -s style.css )
+			WIFIPASS=$(echo " Press Enter if network is saved" | wofi -d -c $conf/pass_config -s $conf/style.css )
 		fi
 		nmcli dev wifi con "$CHSSID" password "$WIFIPASS"
 	fi

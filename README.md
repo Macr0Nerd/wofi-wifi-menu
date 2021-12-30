@@ -13,3 +13,8 @@ In addition to the original project's dependencies, have a nerd font installed. 
 * WEP networks not tested
 * Nerd Fonts interfere with Font Awesome.
 FA conversion coming soon.
+
+### Configuration & Styling
+To configure, copy the config files and stylesheets to ~/.config/wofi-wifi-menu.
+This directory will have to be created.
+Can be styled and configured like a regular wofi menu.
