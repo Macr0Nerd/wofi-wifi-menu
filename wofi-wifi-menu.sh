@@ -6,21 +6,21 @@ LIST=$(nmcli --fields SSID,SECURITY,BARS device wifi list | sed '/^--/d' | sed 1
 # get current connection status
 CONSTATE=$(nmcli -fields WIFI g)
 if [[ "$CONSTATE" =~ "enabled" ]]; then
-	TOGGLE="Disable WiFi 睊"
+	TOGGLE="Disable WiFi  "
 elif [[ "$CONSTATE" =~ "disabled" ]]; then
-	TOGGLE="Enable WiFi 直"
+	TOGGLE="Enable WiFi  "
 fi
 
 # display menu; store user choice
-CHENTRY=$(echo -e "$TOGGLE\n$LIST" | uniq -u | rofi -dmenu -selected-row 1 -config "./theme.rasi")
+CHENTRY=$(echo -e "$TOGGLE\n$LIST" | uniq -u | wofi -d -c main_config -s style.css)
 # store selected SSID
 CHSSID=$(echo "$CHENTRY" | sed  's/\s\{2,\}/\|/g' | awk -F "|" '{print $1}')
 
 if [ "$CHENTRY" = "" ]; then
     exit
-elif [ "$CHENTRY" = "Enable WiFi 直" ]; then
+elif [ "$CHENTRY" = "Enable WiFi  " ]; then
 	nmcli radio wifi on
-elif [ "$CHENTRY" = "Disable WiFi 睊" ]; then
+elif [ "$CHENTRY" = "Disable WiFi  " ]; then
 	nmcli radio wifi off
 else
     # get list of known connections
@@ -36,7 +36,7 @@ else
 		nmcli con up "$CHSSID"
 	else
 		if [[ "$CHENTRY" =~ "" ]]; then
-			WIFIPASS=$(echo " Press Enter if network is saved" | rofi -dmenu -p " WiFi Password: " -lines 1 )
+			WIFIPASS=$(echo " Press Enter if network is saved" | wofi -d -c pass_config -s style.css )
 		fi
 		nmcli dev wifi con "$CHSSID" password "$WIFIPASS"
 	fi

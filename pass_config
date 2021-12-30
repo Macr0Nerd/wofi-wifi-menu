@@ -1,0 +1,8 @@
+lines=0
+prompt=Enter WiFi Password
+width=20%
+height=1%
+password=*
+layer=overlay
+location=top_right
+x=-10
