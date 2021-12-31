@@ -2,13 +2,15 @@
 *Forked from [vlfldr](https://github.com/vlfldr/rofi-wifi-menu)*
 
 A small and configurable wifi menu for swaywm. Written in bash. Uses wofi and nmcli.
+In addition to the original project's dependencies (bash, nmcli, wofi), this script uses:
+* notify-send to display success/failure notification on connection
 
-In addition to the original project's dependencies, have a nerd font installed. Replace icons in the shell script as you wish.
 
 **This fork's goals:**
 * Make rofi-wifi-menu work with wofi
 
 **This forks' limitations:**
+* Width needs to manually bumped up based on longest SSID. Sorry :(
 * No manual SSID entry
 * WEP networks not tested
 * Nerd Fonts interfere with Font Awesome.
