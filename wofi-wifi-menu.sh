@@ -35,7 +35,7 @@ else
 	fi
 
 	# Parses the list of preconfigured connections to see if it already contains the chosen SSID. This speeds up the connection process
-	if [[ $(echo "$KNOWNCON" | grep "$CHSSID") = "$CHSSID" ]]; then
+	if [[ $(echo "$KNOWNCON" | grep "$CHSSID" | sed  's/\s\{2,\}/\|/g' | awk -F "|" '{print $1}') = "$CHSSID" ]]; then
 		nmcli con up "$CHSSID"
 	else
 		if [[ "$CHENTRY" =~ "" ]]; then
